@@ -6,13 +6,25 @@ const initialState = [
         id: nanoid(),    //npm i nanoid
         title: "Introduction into Redux/Toolkit",
         content: "Welcome to the Redux Toolkit Quick Start tutorial! This tutorial will briefly introduce you to Redux Toolkit and teach you how to start using it correctly.",
-        userId: 1
+        userId: 1,
+        reactions:{
+            thumbsUp:2,
+            heart: 0,
+            smiley: 1,
+            thumbsDown:0,
+       }
     },
     {
         id: nanoid(),    //npm i nanoid
         title: "Create a Redux Store",
         content: "Create a file named src/app/store.js. Import the configureStore API from Redux Toolkit",
-        userId: 3
+        userId: 3,
+        reactions:{
+            thumbsUp:4,
+            heart: 1,
+            smiley: 1,
+            thumbsDown:0,
+       }
     }
 ];
 
@@ -31,7 +43,13 @@ export const postsSlice = createSlice({
                         id: nanoid(),
                         title,
                         content,
-                        userId
+                        userId,
+                        reactions:{
+                            thumbsUp:0,
+                            heart: 0,
+                            smiley: 0,
+                            thumbsDown:0,
+                       }
                     }
 
                 }
@@ -45,9 +63,27 @@ export const postsSlice = createSlice({
                 state.splice(index, 1);
                 console.log("Deleted!");
             }
+        },
+        postEdit:(state, action)=>{
+            const {id, title, userId, content}=action.payload;
+            const existingPost=state.find(post=>post.id===id);
+            if(existingPost){
+                existingPost.title=title;
+                existingPost.userId=userId;
+                existingPost.content=content;
+            }
+
+        },
+        reactionAdd:(state,action)=>{
+            const {postId, reaction}=action.payload;
+            const existingPost=state.find(post=>post.id===postId);
+            if(existingPost){
+                existingPost.reactions[reaction]++;
+            }
+
         }
     }
 });
 
-export const { postAdd, postDelete } = postsSlice.actions;
+export const { postAdd, postDelete, reactionAdd } = postsSlice.actions;
 export default postsSlice.reducer;

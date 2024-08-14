@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { postDelete } from "../../app/appSlices/postsSlice";
 import AuthorPost from "./AuthorPost";
 import AddPostForm from "./AddPostForm";
+import ReactionBtns from "./ReactionBtns";
 
 const PostsList = () => {
     const posts = useSelector((store) => store.posts);
@@ -20,6 +21,7 @@ const PostsList = () => {
                         <h3>{post.title}</h3>
                         <p> {post.content} ...</p>
                         <p><AuthorPost userId={post.userId}/></p>
+                        <ReactionBtns post={post}/>
                         <button onClick={()=>dispatch(postDelete({id: post.id}))}>delete</button>
                     </article>
                 ))
