@@ -37,11 +37,17 @@ export const postsSlice = createSlice({
                 }
             }
         },
-        postDelete: (state, payload)=>{
-            
+        postDelete: (state, action) => {
+            console.log(action);
+            const index = state.findIndex(post => post.id == action.payload.id);
+            console.log(index);
+            if (index !== -1) {
+                state.splice(index, 1);
+                console.log("Deleted!");
+            }
         }
     }
 });
 
-export const { postAdd } = postsSlice.actions;
+export const { postAdd, postDelete } = postsSlice.actions;
 export default postsSlice.reducer;
