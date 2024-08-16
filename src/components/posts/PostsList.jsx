@@ -7,7 +7,7 @@ import ReactionBtns from "./ReactionBtns";
 const PostsList = () => {
     const posts = useSelector((store) => store.posts);
     const dispatch=useDispatch();
-    console.log(posts);
+    // console.log(posts);
     
     return (
         <section>

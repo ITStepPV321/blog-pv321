@@ -43,7 +43,7 @@ export const postsSlice = createSlice({
                         id: nanoid(),
                         title,
                         content,
-                        userId,
+                        userId: parseInt(userId),
                         reactions:{
                             thumbsUp:0,
                             heart: 0,

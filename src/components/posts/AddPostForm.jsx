@@ -21,7 +21,6 @@ const AddPostForm = () => {
         }
     }
 
-
     return (
         <form onSubmit={handlerSubmit}>
             <label htmlFor="title">Post Title</label> 
@@ -50,6 +49,7 @@ const AddPostForm = () => {
                 onChange={handlerContentChange}
              />
              <br/>
+             
              <button type="submit"> Add Post</button>
         </form>
     )
