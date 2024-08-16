@@ -1,24 +1,44 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { postAdd } from "../../app/appSlices/postsSlice";
+import { postAdd,postEdit } from "../../app/appSlices/postsSlice";
 
-const AddPostForm = () => {
+
+const AddPostForm = ({post}) => {
     const users = useSelector(store => store.users);
     const dispatch = useDispatch();
 
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [userId, setUserId] = useState(0);
+    const [id, setId] = useState(null);
 
     const handlerTitleChange = event => setTitle(event.target.value);
     const handlerContentChange = event => setContent(event.target.value);
     const handlerAuthorChange = event => setUserId(event.target.value);
 
+    useEffect(()=>{
+        if (post){
+            setTitle(post.title);
+            setContent(post.content);
+            setUserId(post.userId);
+            setId(post.id);
+        }
+    },[post]);
+
     const handlerSubmit = (event) => {
         event.preventDefault();
+        console.log(title);
+        if (post&&title&&content){
+            // dispatch(postEdit({id: id,title:title,userId:userId,content:content}));
+            dispatch(postEdit({id,title,userId,content}));
+        }else
         if (title && content){
             dispatch(postAdd(title,content,userId));
         }
+        setTitle("");
+        setContent("");
+        setUserId(0);
+        setId(null);
     }
 
     return (
@@ -49,8 +69,9 @@ const AddPostForm = () => {
                 onChange={handlerContentChange}
              />
              <br/>
-             
-             <button type="submit"> Add Post</button>
+        
+             <button type="submit"> Save Post</button>:
+     
         </form>
     )
 };

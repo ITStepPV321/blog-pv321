@@ -55,7 +55,7 @@ export const postsSlice = createSlice({
                 }
             }
         },
-        postDelete: (state, action) => {
+        postDelete: (state, action) => { //'post/postDelete
             console.log(action);
             const index = state.findIndex(post => post.id == action.payload.id);
             console.log(index);
@@ -65,11 +65,12 @@ export const postsSlice = createSlice({
             }
         },
         postEdit:(state, action)=>{
+            console.log(action.payload);
             const {id, title, userId, content}=action.payload;
             const existingPost=state.find(post=>post.id===id);
             if(existingPost){
                 existingPost.title=title;
-                existingPost.userId=userId;
+                existingPost.userId=parseInt(userId);
                 existingPost.content=content;
             }
 
@@ -85,5 +86,5 @@ export const postsSlice = createSlice({
     }
 });
 
-export const { postAdd, postDelete, reactionAdd } = postsSlice.actions;
+export const { postAdd, postDelete, reactionAdd, postEdit } = postsSlice.actions;
 export default postsSlice.reducer;
